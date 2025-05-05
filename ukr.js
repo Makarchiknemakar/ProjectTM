@@ -1,117 +1,131 @@
-let answers = document.querySelectorAll('.answer');
-let question  = document.querySelector('.question');
-let result = document.querySelector('.result');
-let start = document.querySelector('.start');
-let container = document.querySelector('.container');
-let mainContainer = document.querySelector('.main-container');
-
-start.addEventListener('click', function(){
-    container.style.display = "flex";
-    mainContainer.style.display = "none";
-
-    currentQuest.display();
-});
-
-class Question {
-    constructor(a, b) {
-        this.a = a || this.randNumber(-100, 100);
-        this.b = b || this.randNumber(0, 100);
-        this.sign = this.randSign();
-        this.question = `${this.a} ${this.sign} ${this.b}`;
-        this.correct = this.makeCorrect();
-        this.answers = [
-            this.randNumber(this.correct - 10, this.correct + 10),
-            this.randNumber(this.correct - 10, this.correct + 10),
-            this.randNumber(this.correct - 10, this.correct + 10),
-            this.randNumber(this.correct - 10, this.correct + 10),
-            this.correct
+class UkrLangQuestion {
+    constructor() {
+        const questionPool = [
+            {
+                question: 'Оберіть синонім до слова "гарний":',
+                correct: 'вродливий',
+                answers: ['брудний', 'вродливий', 'повний', 'добрий', 'звуковий']
+            },
+            {
+                question: 'Оберіть антонім до слова "сильний":',
+                correct: 'слабкий',
+                answers: ['великий', 'розумний', 'слабкий', 'міцний', 'енергійний']
+            },
+            {
+                question: 'Яке слово написане правильно?',
+                correct: 'будь ласка',
+                answers: ['будласка', 'будь ласка', 'бутьласка', 'буд ласка', 'будласка']
+            },
+            {
+                question: 'Укажіть правильну форму слова: "У класі багато ___":',
+                correct: 'учнів',
+                answers: ['ученики', 'учні', 'учнів', 'учень', 'учеників']
+            },
+            {
+                question: 'Яке слово зайве?',
+                correct: 'трактор',
+                answers: ['олівець', 'ручка', 'зошит', 'трактор', 'папір']
+            },
+            {
+                question: 'До якого роду належить слово "вікно"?',
+                correct: 'середній',
+                answers: ['чоловічий', 'жіночий', 'середній', 'абстрактний', 'живий']
+            },
+            {
+                question: 'Яка літера пропущена в слові: ма..бутнє?',
+                correct: 'й',
+                answers: ['и', 'і', 'е', 'й', 'я']
+            },
+            {
+                question: 'Оберіть прикметник:',
+                correct: 'смачний',
+                answers: ['їсти', 'смачний', 'їжа', 'смак', 'смачно']
+            },
+            {
+                question: 'Що означає фразеологізм "зарубати на носі"?',
+                correct: 'добре запам’ятати',
+                answers: ['поранись', 'образитись', 'переплутатись', 'добре запам’ятати', 'сумувати']
+            },
+            {
+                question: 'Оберіть дієслово:',
+                correct: 'читати',
+                answers: ['книга', 'читати', 'читання', 'читаючий', 'прочитаний']
+            },
+            {
+                question: 'Яке речення є окличним?',
+                correct: 'Як гарно навесні!',
+                answers: ['Я люблю весну.', 'Як гарно навесні!', 'Навесні розквітають квіти.', 'Весна прийшла.', 'Пора прокидатися.']
+            },
+            {
+                question: 'Який префікс треба додати: ...бігти?',
+                correct: 'у',
+                answers: ['з', 'на', 'у', 'від', 'пере']
+            }
         ];
+
+        const randomIndex = UkrLangQuestion.counter++;
+        const data = questionPool[randomIndex];
+
+        this.question = data.question;
+        this.correct = data.correct;
+        this.answers = [...data.answers];
         this.shuffle(this.answers);
     }
 
-    display() {
-        question.innerHTML = this.question;
-        for (let i = 0; i < answers.length; i++) {
-            answers[i].innerHTML = this.answers[i];
-        }
-    }
-
     shuffle(array) {
-        for (let i = array.length - 1; i > 0; i--) { 
-            let j = Math.floor(Math.random() * (i + 1));  
-            [array[i], array[j]] = [array[j], array[i]]; 
-        } 
-    }
-
-    randNumber(min, max) {
-        return Math.round(Math.random() * (max - min) + min);
-    }
-
-    randSign() {
-        let x = this.randNumber(0, 3);
-        return signs[x];
-    }
-
-    makeCorrect() {
-        switch (this.sign) {
-            case '-':
-                return this.a - this.b;
-            case '+':
-                return this.a + this.b;
-            case '*':
-                return this.a * this.b;
-            case '/':
-                return this.a / this.b;
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
         }
     }
 }
+UkrLangQuestion.counter = 0;
 
-let currentQuest = new Question();
+const startBtn = document.querySelector('.start');
+const questionEl = document.querySelector('.question');
+const answersEl = document.querySelector('.answers');
+const resultEl = document.querySelector('.result');
+const container = document.querySelector('.container');
+const mainContainer = document.querySelector('.main-container');
 
-let rightCount = 0;
-let total = 0;
-let questionCount = 0;
+let questions = [];
+let current = 0;
+let score = 0;
 
-function testResult() {
-    mainContainer.style.display = "flex";
-    container.style.display = "none";
-    result.innerHTML = `
-        Ви дали: ${rightCount} правильних відповідей із: ${total}
-        Точність: ${(rightCount / total * 100).toFixed(2)}%
-    `;
-}
+startBtn.addEventListener('click', () => {
+    questions = [];
+    UkrLangQuestion.counter = 0;
+    for (let i = 0; i < 12; i++) {
+        questions.push(new UkrLangQuestion());
+    }
+    current = 0;
+    score = 0;
+    mainContainer.style.display = 'none';
+    container.style.display = 'block';
+    showQuestion();
+});
 
-for (let i = 0; i < answers.length; i++) {
-    answers[i].addEventListener('click', function() {
-        if (answers[i].innerHTML == currentQuest.correct) {
-            answers[i].style.backgroundColor = "#00ff00";
-            anime({
-                targets: answers[i],
-                delay: 500,
-                backgroundColor: '#ff7f50', 
-                duration: 500, 
-                easing: 'linear' 
-            });
-            rightCount++;
-        } else {
-            answers[i].style.backgroundColor = "#ff0000";
-            anime({
-                targets: answers[i],
-                delay: 500,
-                backgroundColor: '#ff7f50', 
-                duration: 500,
-                easing: 'linear' 
-            });
-        }
-        
-        total++;
-        questionCount++;
+function showQuestion() {
+    if (current >= questions.length) {
+        container.style.display = 'none';
+        mainContainer.style.display = 'block';
+        resultEl.textContent = `Ваш результат: ${score} з ${questions.length}`;
+        return;
+    }
 
-        if (questionCount >= 12) {
-            testResult();
-        } else {
-            currentQuest = new Question();
-            currentQuest.display();
-        }
+    const q = questions[current];
+    questionEl.textContent = q.question;
+    answersEl.innerHTML = '';
+
+    q.answers.forEach(ans => {
+        const div = document.createElement('div');
+        div.className = 'answer';
+        div.textContent = ans;
+        div.addEventListener('click', () => {
+            if (ans === q.correct) score++;
+            current++;
+            showQuestion();
+        });
+        answersEl.appendChild(div);
     });
 }

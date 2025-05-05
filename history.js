@@ -6,67 +6,67 @@ class HISTORY LangQuestion {
                 question: 'Коли була прийнята Конституція України?',
                 correct: '1996',
                 answers: ['1991','1996','2004','2014']
-            }
+            },
           {
                 
                 question: 'Хто був першим президентом незалежної України',
                 correct: 'Леонід Кравчук',
                 answers: ['Петро Порошенко','Леонід Кучма','Леонід Кравчук','Віктор Ющенко']
-            }
+            },
       {
                 
-                question: 'Коли була прийнята Конституція України?',
-                correct: '1996',
-                answers: ['1991','1996','2004','2014']
-            }{
+                question: 'Коли відбулося хрещення Русі?',
+                correct: '988',
+                answers: ['882','988','1019','1054']
+            },{
                 
-                question: 'Коли була прийнята Конституція України?',
-                correct: '1996',
-                answers: ['1991','1996','2004','2014']
-            }{
+                question: 'Яка країна розпочала Першу світову війну',
+                correct: ' Австро-Угорщина',
+                answers: ['Росія','Німеччина',' Австро-Угорщина','Франція']
+            },{
                 
-                question: 'Коли була прийнята Конституція України?',
-                correct: '1996',
-                answers: ['1991','1996','2004','2014']
-            }{
+                question: 'Хто був автором "Заповіту"?',
+                correct: 'Тарас Шевченко',
+                answers: [' Іван Франко','Леся Українка','Тарас Шевченко',' Григорій Сковорода']
+            },{
                 
-                question: 'Коли була прийнята Конституція України?',
-                correct: '1996',
-                answers: ['1991','1996','2004','2014']
-            }{
+                question: 'Коли Україна здобула незалежність?',
+                correct: '24 серпня 1991',
+                answers: ['24 серпня 1991','1 грудня 1990',' 28 червня 1996',' 22 січня 1918']
+            },{
                 
-                question: 'Коли була прийнята Конституція України?',
-                correct: '1996',
-                answers: ['1991','1996','2004','2014']
-            }{
+                question: 'Який діяч очолював Запорозьку Січ?',
+                correct: 'Дмитро Вишневецький',
+                answers: ['Богдан Хмельницький','Іван Мазепа',' Петро Конашевич-Сагайдачний','Дмитро Вишневецький']
+            },{
                 
-                question: 'Коли була прийнята Конституція України?',
-                correct: '1996',
-                answers: ['1991','1996','2004','2014']
-            }{
+                question: 'Коли тривала Друга світова війна?',
+                correct: '1939–1945',
+                answers: [' 1937–1945','1939–1945',' 1941–1945','1939–1944']
+            },{
                 
-                question: 'Коли була прийнята Конституція України?',
-                correct: '1996',
-                answers: ['1991','1996','2004','2014']
-            }{
+                question: ' Столиця Галицько-Волинського князівства:',
+                 correct: 'Галич',
+                answers: [' Київ','Чернігів','Львів','Галич']
+            },{
                 
-                question: 'Коли була прийнята Конституція України?',
-                correct: '1996',
-                answers: ['1991','1996','2004','2014']
-            }{
+                question: 'У якому році було укладено Берестейську унію?',
+                correct: ' 1596',
+                answers: [' 1596','1648','1569','1620']
+            },{
                 
-                question: 'Коли була прийнята Конституція України?',
-                correct: '1996',
-                answers: ['1991','1996','2004','2014']
-            }{
+                question: ' Коли почався Майдан (Революція Гідності)?',
+                correct: ' 2013',
+                answers: [' 2004','2014',' 2013','2012']
+            },{
                 
-                question: 'Коли була прийнята Конституція України?',
-                correct: '1996',
-                answers: ['1991','1996','2004','2014']
+                question: 'Яка країна першою визнала незалежність України?',
+                correct: ' Канада',
+                answers: ['Польща',' Канада','Росія',' США']
             }
         ];
 
-        const randomIndex = UkrLangQuestion.counter++;
+        const randomIndex = HISTORY LangQuestion.counter++;
         const data = questionPool[randomIndex];
 
         this.question = data.question;
@@ -82,7 +82,7 @@ class HISTORY LangQuestion {
         }
     }
 }
-UkrLangQuestion.counter = 0;
+HISTORY LangQuestion.counter = 0;
 
 const startBtn = document.querySelector('.start');
 const questionEl = document.querySelector('.question');
@@ -97,9 +97,9 @@ let score = 0;
 
 startBtn.addEventListener('click', () => {
     questions = [];
-    UkrLangQuestion.counter = 0;
+    HISTORY LangQuestion.counter = 0;
     for (let i = 0; i < 12; i++) {
-        questions.push(new UkrLangQuestion());
+        questions.push(new  HISTORY LangQuestion());
     }
     current = 0;
     score = 0;
